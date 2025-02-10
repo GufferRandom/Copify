@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    container_name: app-db
+    image: rapidfort/microsoft-sql-server-2019-ib
+    ports:
+      - "500:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Nagazi2@Secure
+    volumes:
+      - ./init-db.sql:/init-db.sql 
+  copify:
+    container_name: copify
+    build: 
+      context: .
+    ports:
+      - "100:8080"
+      - "200:8081"
+      - "1000:5000"
+      - "1001:5001"
+    depends_on:
+      - sqlserver
+    environment:
+      - DB_HOST=sqlserver
+      - DBNAME=copify
+      - DB_SA_PASS=Nagazi2@Secure

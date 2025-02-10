@@ -1,0 +1,6 @@
+services:
+  copify:
+    image: ${DOCKER_REGISTRY-}copify
+    build:
+      context: .
+      dockerfile: Copify/Dockerfile
