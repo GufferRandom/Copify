@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 var dbhost = Environment.GetEnvironmentVariable("DB_HOST") ?? "DESKTOP\\SQLEXPRESS";
-var dbname = Environment.GetEnvironmentVariable("DBNAME") ?? "Copify";
+var dbname = Environment.GetEnvironmentVariable("DBNAME") ?? "Rp";
 var pwd = Environment.GetEnvironmentVariable("DB_SA_PASS") ?? "nagazi2@";
 builder.Configuration["ConnectionStrings:DefaultConnection"] = $"Data Source={dbhost};Initial Catalog={dbname};User Id=sa;Password={pwd};TrustServerCertificate=True";
 builder.Services.AddDbContext<AppDataContext>(
@@ -22,6 +22,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase=true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength=8;
 }).AddEntityFrameworkStores<AppDataContext>();
 builder.Services.AddAuthentication(options=> {
     options.DefaultAuthenticateScheme=
