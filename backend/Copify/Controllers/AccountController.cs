@@ -72,13 +72,13 @@ namespace Copify.Controllers
                 return BadRequest(ModelState);
             }
             AppUser user;
-            if (login.UserName.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase))
+            if (login.UserNameOrGmail.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase))
             {
-                user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == login.UserName);
+                user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == login.UserNameOrGmail);
             }
             else
             {
-                user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == login.UserName);
+                user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == login.UserNameOrGmail);
             }
             if(user == null)
             {
