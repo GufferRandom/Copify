@@ -1,5 +1,7 @@
 using Copify.AppliocatioDbContext;
+using Copify.Interfaces;
 using Copify.Models;
+using Copify.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +50,8 @@ builder.Services.AddAuthentication(options=> {
     };
 });
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ITokenService,TokenService>();
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
