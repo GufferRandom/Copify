@@ -29,6 +29,21 @@ namespace Copify.Controllers
             _tokenService=tokenService;
             _signInManager= signInManager;
         }
+
+        [HttpGet("register")]
+        public async Task<IActionResult> Register()
+        {
+            RegisterDto registerDto = new RegisterDto();
+
+            return Ok(registerDto);
+        }
+        [HttpGet("login")]
+        public async Task<IActionResult> Login()
+        {
+            LoginDto loginDto = new LoginDto();
+
+            return Ok(loginDto);
+        }
         [HttpPost("register")]
         [ProducesResponseType(200,Type=typeof(RegisterDto))]
         [ProducesResponseType(400)]
