@@ -26,3 +26,5 @@ services:
       - DB_HOST=sqlserver
       - DBNAME=copify
       - DB_SA_PASS=Nagazi2@Secure
+      - ClientId=${ClientId}
+      - ClientSecret=${ClientSecret}

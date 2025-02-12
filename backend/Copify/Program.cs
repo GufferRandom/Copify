@@ -50,6 +50,11 @@ builder.Services.AddAuthentication(options=> {
     };
 });
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient<ISpotifyAccountService, SpotifyAccountService>(c =>
+{
+    c.BaseAddress = new Uri("https://accounts.spotify.com/api/");
+});
+
 builder.Services.AddScoped<ITokenService,TokenService>();
 
 var app = builder.Build();
