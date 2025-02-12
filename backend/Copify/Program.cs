@@ -1,3 +1,4 @@
+using System.Net.Security;
 using Copify.AppliocatioDbContext;
 using Copify.Interfaces;
 using Copify.Models;
@@ -12,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-var dbhost = Environment.GetEnvironmentVariable("DB_HOST") ?? "DESKTOP\\SQLEXPRESS";
+var dbhost = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost"; //DESKTOP\\SQLEXPRESS
 var dbname = Environment.GetEnvironmentVariable("DBNAME") ?? "Rp";
 var pwd = Environment.GetEnvironmentVariable("DB_SA_PASS") ?? "nagazi2@";
 builder.Configuration["ConnectionStrings:DefaultConnection"] = $"Data Source={dbhost};Initial Catalog={dbname};User Id=sa;Password={pwd};TrustServerCertificate=True";
@@ -54,7 +55,10 @@ builder.Services.AddHttpClient<ISpotifyAccountService, SpotifyAccountService>(c 
 {
     c.BaseAddress = new Uri("https://accounts.spotify.com/api/");
 });
-
+builder.Services.AddHttpClient<ISpotifyNewReleases,SpotifyGetNewReleases>(c=>{
+    c.BaseAddress = new Uri("https://api.spotify.com/v1/");
+    c.DefaultRequestHeaders.Add("Accept", "application/.json");
+});
 builder.Services.AddScoped<ITokenService,TokenService>();
 
 var app = builder.Build();

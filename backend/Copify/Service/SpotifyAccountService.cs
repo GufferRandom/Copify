@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Copify.Models;
 using Microsoft.Identity.Client;
-
+using Copify.Interfaces;
 namespace Copify.Service
 {
     public class SpotifyAccountService:ISpotifyAccountService
@@ -29,14 +29,10 @@ namespace Copify.Service
             {
                 {"grant_type", "client_credentials"}
             });
-
             var response = await _httpClient.SendAsync(request);
-
             response.EnsureSuccessStatusCode();
-
             using var responseStream = await response.Content.ReadAsStreamAsync();
             var authResult = await JsonSerializer.DeserializeAsync<AuthResult>(responseStream);
-
             return authResult.access_token;
         }
 
