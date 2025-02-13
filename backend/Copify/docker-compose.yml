@@ -28,3 +28,4 @@ services:
       - DB_SA_PASS=Nagazi2@Secure
       - ClientId=${ClientId}
       - ClientSecret=${ClientSecret}
+      - ASPNETCORE_ENVIRONMENT=Development

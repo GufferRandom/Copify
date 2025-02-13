@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
-namespace Copify.Models
+namespace Copify.SpotifyModels
 {
-    public class Release{
+    public class Release
+    {
         [JsonPropertyName("albums")]
-        public Albums Albums{get;set;}
+        public Albums Albums { get; set; }
     }
     public class Albums
     {
@@ -34,7 +35,7 @@ namespace Copify.Models
         public Item[] Items { get; set; }
     }
 
-    public  class Item
+    public class Item
     {
         [JsonPropertyName("album_type")]
         public string AlbumType { get; set; }
@@ -79,7 +80,7 @@ namespace Copify.Models
         public Artist[] Artists { get; set; }
     }
 
-    public  class Artist
+    public class Artist
     {
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
@@ -100,12 +101,12 @@ namespace Copify.Models
         public string Uri { get; set; }
     }
 
-    public  class ExternalUrls
+    public class ExternalUrls
     {
         [JsonPropertyName("spotify")]
         public string Spotify { get; set; }
     }
-    public  class Image
+    public class Image
     {
         [JsonPropertyName("url")]
         public Uri Url { get; set; }
@@ -116,12 +117,14 @@ namespace Copify.Models
         [JsonPropertyName("width")]
         public int Width { get; set; }
     }
-    public class Album{
-    [JsonPropertyName("reason")]
+    public class Album
+    {
+        [JsonPropertyName("reason")]
 
-        public string Reason{get;set;}
+        public string Reason { get; set; }
     }
-    public class Restrictions{
-        public string reason{get;set;}
+    public class Restrictions
+    {
+        public string reason { get; set; }
     }
 }
