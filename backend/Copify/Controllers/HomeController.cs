@@ -22,13 +22,16 @@ namespace Copify.Controllers
         private readonly ISpotifyAccountService _spotifyAccountService;
         private readonly ISpotifyNewReleases _spotifyNewReleases;
         private readonly ISpotifyGetAlbumTracks _spotifyGetAlbumTracks;
+        private readonly ISpotifyTrackFilteredById _spotifyTrackFilteredById;
         private readonly string client_id = Environment.GetEnvironmentVariable("ClientId") ?? "";
         private readonly string client_secret = Environment.GetEnvironmentVariable("ClientSecret") ?? "";
-        public HomeController(ISpotifyAccountService spotifyAccountService,ISpotifyNewReleases spotifyNewReleases, ISpotifyGetAlbumTracks spotifyGetAlbumTracks)
+        public HomeController(ISpotifyAccountService spotifyAccountService,ISpotifyNewReleases spotifyNewReleases, 
+            ISpotifyGetAlbumTracks spotifyGetAlbumTracks,ISpotifyTrackFilteredById spotifyTrackFilteredById)
         {
             _spotifyAccountService = spotifyAccountService;
             _spotifyNewReleases = spotifyNewReleases;
            _spotifyGetAlbumTracks = spotifyGetAlbumTracks;
+            _spotifyTrackFilteredById = spotifyTrackFilteredById;
         }
         [HttpGet("/api/Home/testing")]
         public async Task<IActionResult> testing()
@@ -50,10 +53,25 @@ namespace Copify.Controllers
             return Ok(res);
         }
         [HttpGet("AlbumTracks/{albumid}")]
-        public async Task<IActionResult> AlbumTracks(string albumid, [FromQuery] int limit)
+        public async Task<IActionResult> AlbumTracks(string albumid, [FromQuery,Required] int limit=5)
         {
             string token = await _spotifyAccountService.GetToken(client_id, client_secret);
             var res = await _spotifyGetAlbumTracks.GetAlbumTracks(albumid,limit, token);
+            if(res == null)
+            {
+                return NotFound("Wrong Album Id Brotha");
+            }
+            return Ok(res);
+        }
+        [HttpGet("AlbumTracks/Track/{Id}")]
+        public async Task<IActionResult> GetTrack(string Id)
+        {
+            string token = await _spotifyAccountService.GetToken(client_id, client_secret);
+            var res = await _spotifyTrackFilteredById.TrackById(Id, token);
+            if(res == null)
+            {
+                return NotFound("Wrong Id brotha");
+            }
             return Ok(res);
         }
     }

@@ -4,6 +4,8 @@ using Copify.Interfaces;
 using Copify.Models;
 using Copify.SpotifyModels;
 using System.Text.Json;
+using System.Collections.Generic;
+using System.Transactions;
 namespace Copify.Service
 {
     public class SpotifyGetAlbumTracks:ISpotifyGetAlbumTracks
@@ -15,6 +17,9 @@ namespace Copify.Service
         }
         public async Task<IEnumerable<AlbumTrackFiltred>> GetAlbumTracks(string albumId,int limit, string access_key)
         {
+            try
+            {
+
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", access_key);
             var response = await _httpClient.GetAsync($"albums/{albumId}/tracks?limit={limit}");
             response.EnsureSuccessStatusCode();
@@ -38,6 +43,12 @@ namespace Copify.Service
                 }).ToList()
             }).ToList();
             return albumTrackFiltered;
+            }
+            catch(Exception ex)
+            {
+                IEnumerable<AlbumTrackFiltred> en = null;
+                return en;
+            }
         }
     }
 }

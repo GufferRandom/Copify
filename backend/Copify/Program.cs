@@ -64,6 +64,11 @@ builder.Services.AddHttpClient<ISpotifyGetAlbumTracks,SpotifyGetAlbumTracks>(c =
     c.BaseAddress = new Uri("https://api.spotify.com/v1/");
     c.DefaultRequestHeaders.Add("Accept", "application/.json");
 });
+builder.Services.AddHttpClient<ISpotifyTrackFilteredById,SpotifyTrackFilteredByIdService>(c =>
+{
+    c.BaseAddress = new Uri("https://api.spotify.com/v1/");
+    c.DefaultRequestHeaders.Add("Accept", "application/.json");
+});
 builder.Services.AddScoped<ITokenService,TokenService>();
 
 var app = builder.Build();
